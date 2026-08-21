@@ -19,6 +19,39 @@ A simple, lightweight JavaScript API for handling cookies, client-side.
 **👉👉 If you're viewing this at https://github.com/js-cookie/js-cookie, you're reading the documentation for the main branch.
 [View documentation for the latest release.](https://github.com/js-cookie/js-cookie/tree/latest#readme) 👈👈**
 
+## 本地 Web UI 演示
+
+本仓库额外提供了一个本地 Web UI，用于直观看到 `js-cookie` 的基本 API：
+
+- 创建或更新当前页面可见的 Cookie
+- 查看 `Cookies.get()` 返回的 Cookie
+- 设置 `expires`、`path`、`sameSite`、`secure` 和 `partitioned` 等属性
+- 使用与创建时匹配的属性删除 Cookie
+- 查看每次操作对应的 `Cookies.set()`、`Cookies.get()` 或 `Cookies.remove()` 代码
+
+这个 Web UI 是基于 `js-cookie` 构建的演示工具，并不是 `js-cookie` 库本身，也不是服务端认证系统。页面通过 `demo/app.mjs` 引入构建后的 `dist/js.cookie.mjs`，实际操作仍由官方库完成。
+
+### 启动演示
+
+```bash
+npm ci
+npm run dist
+python3 -m http.server 4173
+```
+
+然后打开 <http://127.0.0.1:4173/demo/>。
+
+### 使用边界
+
+演示页只能操作当前页面所在域名下、对前端 JavaScript 可见的 Cookie：
+
+- 无法读取或修改 `HttpOnly` Cookie
+- 无法操作其他域名的 Cookie
+- 修改浏览器 `expires` 不会延长服务端 Session 或 JWT 的有效期
+- `Secure` 和 `Partitioned` 是传输与存储属性，不是服务端登录续期机制
+
+演示文件位于 [`demo/`](demo/)。
+
 ## Installation
 
 ### NPM

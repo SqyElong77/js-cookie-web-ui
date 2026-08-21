@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="js-cookie 本地交互演示：创建、读取、更新和删除浏览器 Cookie。"
+    />
+    <title>js-cookie 操作台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-inner">
+        <div>
+          <p class="product-label">JS-COOKIE / LOCAL DEMO</p>
+          <h1>Cookie 操作台</h1>
+        </div>
+        <a
+          class="repository-link"
+          href="https://github.com/js-cookie/js-cookie"
+          target="_blank"
+          rel="noreferrer"
+        >
+          查看官方仓库
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <section class="status-band" aria-label="运行状态">
+        <div class="status-inner">
+          <span class="status-dot" aria-hidden="true"></span>
+          <strong>本地演示已运行</strong>
+          <span>当前域：<code id="current-origin"></code></span>
+          <span>js-cookie：<code>3.0.8</code></span>
+        </div>
+      </section>
+
+      <div class="workspace">
+        <section class="tool-panel" aria-labelledby="editor-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-index">01 / 写入</p>
+              <h2 id="editor-title">创建或更新 Cookie</h2>
+            </div>
+            <span class="method-badge">Cookies.set()</span>
+          </div>
+
+          <form id="cookie-form">
+            <div class="field-grid">
+              <div class="field">
+                <label for="cookie-name">名称</label>
+                <input
+                  id="cookie-name"
+                  name="cookieName"
+                  value="demo_preference"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label for="cookie-value">值</label>
+                <input
+                  id="cookie-value"
+                  name="cookieValue"
+                  value="dark"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+            </div>
+
+            <fieldset>
+              <legend>保存期限</legend>
+              <div class="expiry-options">
+                <label class="radio-option">
+                  <input type="radio" name="expiry" value="session" />
+                  <span>会话</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="expiry" value="1" />
+                  <span>24 小时</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="expiry" value="7" checked />
+                  <span>7 天</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="expiry" value="30" />
+                  <span>30 天</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="cookie-path">Path</label>
+                <input id="cookie-path" name="cookiePath" value="/" />
+              </div>
+
+              <div class="field">
+                <label for="same-site">SameSite</label>
+                <select id="same-site" name="sameSite">
+                  <option value="lax" selected>Lax</option>
+                  <option value="strict">Strict</option>
+                  <option value="none">None</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="switch-row">
+              <label class="switch-control">
+                <input id="secure-cookie" type="checkbox" />
+                <span>
+                  <strong>Secure</strong>
+                  <small>仅通过 HTTPS 发送</small>
+                </span>
+              </label>
+              <label
+                class="switch-control is-disabled"
+                id="partitioned-control"
+              >
+                <input id="partitioned-cookie" type="checkbox" disabled />
+                <span>
+                  <strong>Partitioned</strong>
+                  <small>需要同时启用 Secure</small>
+                </span>
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-button" type="submit">写入 Cookie</button>
+              <button class="secondary-button" id="reset-form" type="button">
+                重置表单
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="tool-panel" aria-labelledby="inspector-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-index">02 / 读取</p>
+              <h2 id="inspector-title">当前页面可见的 Cookie</h2>
+            </div>
+            <button
+              class="secondary-button compact"
+              id="refresh-list"
+              type="button"
+            >
+              刷新
+            </button>
+          </div>
+
+          <div id="cookie-list" class="cookie-list" aria-live="polite"></div>
+
+          <div class="code-preview" aria-labelledby="code-title">
+            <div class="code-heading">
+              <h3 id="code-title">对应代码</h3>
+              <span id="operation-state">等待操作</span>
+            </div>
+            <pre><code id="code-output">Cookies.get()</code></pre>
+          </div>
+        </section>
+      </div>
+
+      <section class="limits-section" aria-labelledby="limits-title">
+        <div class="limits-heading">
+          <p class="section-index">03 / 边界</p>
+          <h2 id="limits-title">它改变什么，不改变什么</h2>
+        </div>
+        <div class="limits-grid">
+          <div class="limit-item">
+            <span class="limit-marker supported">可以</span>
+            <h3>管理前端 Cookie</h3>
+            <p>设置浏览器保存期限、Path、SameSite 和 Secure 等属性。</p>
+          </div>
+          <div class="limit-item">
+            <span class="limit-marker blocked">不可以</span>
+            <h3>读取 HttpOnly</h3>
+            <p>带 HttpOnly 的登录 Cookie 对所有前端 JavaScript 都不可见。</p>
+          </div>
+          <div class="limit-item">
+            <span class="limit-marker blocked">不可以</span>
+            <h3>延长服务端登录</h3>
+            <p>修改浏览器期限不会改变服务端 Session 或 JWT 的 exp。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>
