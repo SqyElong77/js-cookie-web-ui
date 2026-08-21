@@ -31,6 +31,8 @@ A simple, lightweight JavaScript API for handling cookies, client-side.
 
 这个 Web UI 是基于 `js-cookie` 构建的演示工具，并不是 `js-cookie` 库本身，也不是服务端认证系统。页面通过 `demo/app.mjs` 引入构建后的 `dist/js.cookie.mjs`，实际操作仍由官方库完成。
 
+![js-cookie Web UI 演示](docs/web-ui.png)
+
 ### 启动演示
 
 ```bash
